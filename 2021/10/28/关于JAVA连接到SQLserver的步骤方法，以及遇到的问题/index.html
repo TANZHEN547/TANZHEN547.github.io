@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/slt.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/slt.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/slt.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="这是一个java类文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于JAVA连接到SQLserver的步骤方法，以及遇到的问题">
+<meta property="og:url" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Try丶凝视的博客">
+<meta property="og:description" content="这是一个java类文件">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/java.jpg">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/2.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/3.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/4.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/5.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/6.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/7.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/8.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/9.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/10.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/11.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/12.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/13.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/14.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/15.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/16.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/17.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/18.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/19.png">
+<meta property="og:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/20.png">
+<meta property="article:published_time" content="2021-10-28T08:54:08.000Z">
+<meta property="article:modified_time" content="2021-10-30T05:55:36.298Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/java.jpg">
+
+
+<link rel="canonical" href="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/","path":"2021/10/28/关于JAVA连接到SQLserver的步骤方法，以及遇到的问题/","title":"关于JAVA连接到SQLserver的步骤方法，以及遇到的问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>关于JAVA连接到SQLserver的步骤方法，以及遇到的问题 | Try丶凝视的博客</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Try丶凝视的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Try丶凝视的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于JAVA连接到SQLserver的步骤方法，以及遇到的问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-28 16:54:08" itemprop="dateCreated datePublished" datetime="2021-10-28T16:54:08+08:00">2021-10-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-30 13:55:36" itemprop="dateModified" datetime="2021-10-30T13:55:36+08:00">2021-10-30</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这是一个java类文件<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/java.jpg"></p>
+<span id="more"></span>
+<p>要实现将此类连接到数据库一定要执行以下步骤：<br>1.装载驱动程序<br>2.加载驱动程序<br>3.连接到指定数据库<br>4.测试</p>
+<p>第一步：从SQLserver官网上下载jdbc驱动程序，下载时请注意jdbc的版本与javaJDK的版本是否对应。<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/2.png"><br>图中我们可以看到9.4版本的jdbc是可以同时兼容16.0、11.0 和 1.8的，此时我们就要确定我们的jdk版本号方法为：按win+R，输入cmd，在弹出的命令窗口中输入 java -version<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/3.png"><br>图中我们可以看到我们jdk版本为1.8，那么我们就应该在刚刚下载的压缩包中选择1.8版本的jar复制，并在java工程上点击右键新建一个文件夹，命名为lib<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/4.png"><br>在lib文件夹上把刚刚我们复制的jar文件粘贴上<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/5.png"><br>然后在java工程上右击按图中所示进入到创建path的窗口<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/6.png"><br>按图中所示的顺序依次点击<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/7.png"><br>第三步为选择你的java工程的lib文件中的jar包，然后点击OK，出现Referenced Libraries就算创建成功啦！<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/8.png"><br>这个时候我们的jdbc驱动就算装载成功了，既然有了装载那必然会有加载，而加载的方法则由命令实现，命令如下:<br>Class.forName(“com.microsoft.sqlserver.jdbc.SQLServerDriver”);<br>这个命令就是把驱动程序加载到java类文件中</p>
+<hr>
+<p>接下来我们要通过驱动程序将java与数据库连接，命令如下：<br>String dburl=”jdbc:sqlserver://localhost:端口号;DatabaseName=数据库名”;<br>Connection con = DriverManager.getConnection(dburl,”sa”,”sql2008”);//连接到目标数据库<br>System.out.println(“连接成功”);<br>其中sa为用户名，sql2008为密码，端口号里写什么下面会详细讲解<br>到这里我们就已经成功了一半，此时运行会出错，那是因为SQLserver中的一些东西我们没有设置，下面是设置的步骤。</p>
+<hr>
+<p>首先，我们打开ssms点击连接：注意（连接数据库服务器的名字！！！）<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/9.png"><br>我们在服务器上右击选择属性—安全性—设置验证方式为SQLserver—–确定<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/10.png"><br>在安全性—-登录名—-选择sa<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/11.png"><br>右击属性—–常规——更改密码（注意密码一定要与java命令的密码一致）<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/12.png"><br>选择状态设置登录—–启用<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/13.png"><br>接下来我们打开SQL配置管理器，找不到配置管理器的小伙伴可以在搜索框里输入“配置管理器”即可打开<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/14.png"><br>选择SQLserver网络配置—-（你的数据库服务器的名字）的协议—–tcp/ip双击打开<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/15.png"><br>将启用改为“是”<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/16.png"><br>将IP地址中所有启用改为“是”<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/17.png"><br>注：如果你的数据库服务器不是默认的MSSQLSEVERVER那么你就得手动指定端口号，一般情况下默认的服务器端口号都是1433，这个不需要你手动设置，但是如果你的服务器名称不是MSSQLSEVERVER那就证明你在安装数据库的实例配置选择的不是”默认实例”，而是“命名实例”通过你自己给数据库命名得到的实例，而命名实例与默认实例的不同处在于默认实例的数据库会自动给tcp/ip配置端口号1433，而命名实例则不是，需要你自己手动指定端口号。<br>网上的很多教程都是只说了默认服务器状态下的配置方式，而对命名服务器的配置方法一概不提，这就导致了很多人的配置失败。博主当初就是命名服务器的按照默认服务器的教程配置结果搞得一头雾水。<br>指定端口号的方法为：在所有tcp端口后输入任意数字，我在此输入的是1488<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/18.png"><br>并在java命令行中填写你的端口号<br>以上都弄完之后，需要重启服务器，你如果是默认服务器就需要重启SQL server（MSSQLSEVERVER），如果是命名服务器就需要重启SQL server（命名）。<br>重启方法为：在SQL server服务中右击服务器—–重启<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/19.png"><br>重启过后，我们回到MyEclipse重新运行命令当控制台出现“连接成功”证明连接数据库成功<br><img src="/2021/10/28/%E5%85%B3%E4%BA%8EJAVA%E8%BF%9E%E6%8E%A5%E5%88%B0SQLserver%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BB%A5%E5%8F%8A%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/20.png"></p>
+<p>—————————————-《完结撒花》——————————-<br>好了，以上就是java连接到SQLserver数据库的方法啦，如果失败了不要紧，大不了再来一次，仔细钻研一定会成功的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/23/Github%E6%9F%A5%E8%AF%A2%E6%96%B9%E6%B3%95/" rel="prev" title="Github查询方法">
+                  <i class="fa fa-chevron-left"></i> Github查询方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客啦
+</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
